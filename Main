@@ -1,0 +1,104 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MatrixCalculator extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+    /*
+        Using a BorderPane in general
+        Hbox inside the top region (Dropdown, Reset btn, Help btn)
+        Vbox inside the left region (Calculate btn and showSteps)
+        GridPane inside the middle region (Matrix)
+     */
+        BorderPane mainPane = new BorderPane();
+
+//Upper section
+        //Creating HBox
+        HBox upperBorder = new HBox();
+        upperBorder.setSpacing(50);
+
+        Label guidingText = new Label("Select matrix size");
+        //size dropdown menu
+        ComboBox selectMatrixSize = new ComboBox();
+        selectMatrixSize.getItems().add("2");
+        selectMatrixSize.getItems().add("3");
+        selectMatrixSize.getItems().add("4");
+        selectMatrixSize.getItems().add("5");
+
+
+        // Reset and Help buttons
+        Button resetButton = new Button("Reset");
+        Button helpButton = new Button("Help");
+
+        upperBorder.getChildren().addAll(guidingText, selectMatrixSize, resetButton, helpButton);
+
+//LeftSide
+        VBox leftBorder = new VBox();
+        leftBorder.setSpacing(200);
+        // Calculate and Show Steps buttons
+        Button calculateButton = new Button("Calculate");
+        calculateButton.setMaxSize(100,50);
+
+        Button showStepsButton = new Button("Show Steps");
+        showStepsButton.setMaxSize(100,50);
+
+        leftBorder.getChildren().addAll(calculateButton, showStepsButton);
+
+//Center
+        GridPane centerBorder = new GridPane();
+        centerBorder.setHgap(15);
+        centerBorder.setVgap(15);
+        int size = 5;
+        //create class for textfields
+        for (int i = 0; i < size; i++) {
+            for (int j=0; j < size; j++) {
+                TextField field = new TextField();
+                field.setMaxSize(30,30);
+                centerBorder.add(field, i, j);
+
+            }
+        }
+
+        //setting the panes in the BorderPane
+        mainPane.setTop(upperBorder);
+        mainPane.setLeft(leftBorder);
+        mainPane.setCenter(centerBorder);
+
+
+        Scene scene = new Scene(mainPane, 700, 700);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+//    public TextField[][] createMatrix(int size) {
+//
+//        TextField[][] textFieldsArray = new TextField[size][size];
+//        for (int i = 0; i < size; i++) {
+//            for (int j=0; j < size; j++) {
+//                TextField field = new TextField();
+//                field.setMaxSize(10,10);
+//                textFieldsArray[i][j] = field;
+//            }
+//        }
+//
+//        return textFieldsArray;
+//    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
